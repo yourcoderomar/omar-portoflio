@@ -8,12 +8,12 @@ const projects = [
   },
   {
     name: 'Alemni',
-    description: 'A short description of what this project was and the impact it had.',
+    description: 'Alemni helps independent instructors run programs like a pro—without juggling spreadsheets, calendar apps, and endless DMs. Plan your week, enroll students, and keep everyone aligned from one clean workflow',
     image: '/imgs/alemni.jpg',
   },
   {
     name: 'Back2Home',
-    description: 'A short description of what this project was and the impact it had.',
+    description: 'Back2Home is a dedicated platform created by graduating students to address the critical issue of missing persons.',
     image: '/imgs/back2home.jpg',
   },
 ]

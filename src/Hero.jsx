@@ -28,7 +28,9 @@ const experience = [
   },
 ]
 
-export function BitmojiFigure() {
+export function BitmojiFigure({ pose = 'thumbsUp' }) {
+  const isWave = pose === 'wave'
+
   return (
     <svg
       className="hero-figure"
@@ -63,27 +65,58 @@ export function BitmojiFigure() {
       {/* torso */}
       <rect x="65" y="130" width="70" height="68" rx="20" fill="#181818" />
 
-      {/* raised arms */}
-      <g className="figure-arm-left">
-        <path
-          d="M76 144L42 68"
-          stroke="#181818"
-          strokeWidth="24"
-          strokeLinecap="round"
-        />
-        <circle cx="41" cy="64" r="13" fill="#f0c39a" />
-        <rect x="34" y="38" width="11" height="24" rx="5.5" fill="#f0c39a" />
-      </g>
-      <g className="figure-arm-right">
-        <path
-          d="M124 144L158 68"
-          stroke="#181818"
-          strokeWidth="24"
-          strokeLinecap="round"
-        />
-        <circle cx="159" cy="64" r="13" fill="#f0c39a" />
-        <rect x="155" y="38" width="11" height="24" rx="5.5" fill="#f0c39a" />
-      </g>
+      {/* arms */}
+      {isWave ? (
+        <>
+          <g className="figure-arm-left">
+            <path
+              d="M76 144L58 190"
+              stroke="#181818"
+              strokeWidth="24"
+              strokeLinecap="round"
+            />
+            <circle cx="56" cy="194" r="13" fill="#f0c39a" />
+          </g>
+          <g className="figure-arm-right">
+            <path
+              d="M124 144L150 90"
+              stroke="#181818"
+              strokeWidth="24"
+              strokeLinecap="round"
+            />
+            <circle cx="153" cy="82" r="14" fill="#f0c39a" />
+            <path
+              d="M148 58l3 20M158 56l1 22M168 60l-3 20M176 68l-8 18"
+              stroke="#f0c39a"
+              strokeWidth="9"
+              strokeLinecap="round"
+            />
+          </g>
+        </>
+      ) : (
+        <>
+          <g className="figure-arm-left">
+            <path
+              d="M76 144L42 68"
+              stroke="#181818"
+              strokeWidth="24"
+              strokeLinecap="round"
+            />
+            <circle cx="41" cy="64" r="13" fill="#f0c39a" />
+            <rect x="34" y="38" width="11" height="24" rx="5.5" fill="#f0c39a" />
+          </g>
+          <g className="figure-arm-right">
+            <path
+              d="M124 144L158 68"
+              stroke="#181818"
+              strokeWidth="24"
+              strokeLinecap="round"
+            />
+            <circle cx="159" cy="64" r="13" fill="#f0c39a" />
+            <rect x="155" y="38" width="11" height="24" rx="5.5" fill="#f0c39a" />
+          </g>
+        </>
+      )}
 
       {/* neck */}
       <rect x="90" y="112" width="20" height="22" fill="#f0c39a" />

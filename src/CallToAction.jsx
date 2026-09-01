@@ -5,7 +5,7 @@ function CallToAction() {
   return (
     <section className="cta">
       <div className="cta-card">
-        <BitmojiFigure />
+        <BitmojiFigure pose="wave" />
         <div className="cta-content">
           <h2 className="cta-title">Let's work together</h2>
           <p className="cta-text">
