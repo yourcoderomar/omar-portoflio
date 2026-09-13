@@ -5,16 +5,19 @@ const projects = [
     name: 'RM bmu ',
     description: 'A provider of certified European BMU systems, elevators, and facade maintenance solutions in Egypt.',
     image: '/imgs/bmu.jpg',
+    url: 'https://www.rm-bmu.com/en',
   },
   {
     name: 'Alemni',
     description: 'Alemni helps independent instructors run programs like a pro—without juggling spreadsheets, calendar apps, and endless DMs. Plan your week, enroll students, and keep everyone aligned from one clean workflow',
     image: '/imgs/alemni.jpg',
+    url: 'https://edusync-v1.vercel.app/',
   },
   {
     name: 'Back2Home',
     description: 'Back2Home is a dedicated platform created by graduating students to address the critical issue of missing persons.',
     image: '/imgs/back2home.jpg',
+    url: 'https://back-to-home.vercel.app/',
   },
 ]
 
@@ -25,7 +28,13 @@ function Projects() {
         <h2 className="projects-title">Projects</h2>
         <div className="projects-grid">
           {projects.map((project) => (
-            <div className="project-card" key={project.name}>
+            <a
+              className="project-card"
+              key={project.name}
+              href={project.url}
+              target="_blank"
+              rel="noreferrer"
+            >
               <div className="project-card-thumb">
                 {project.image && (
                   <img
@@ -37,7 +46,7 @@ function Projects() {
               </div>
               <h3 className="project-card-name">{project.name}</h3>
               <p className="project-card-desc">{project.description}</p>
-            </div>
+            </a>
           ))}
         </div>
       </div>
