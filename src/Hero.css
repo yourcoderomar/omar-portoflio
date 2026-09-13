@@ -32,8 +32,8 @@
 
 .hero-figure {
   display: block;
-  width: 170px;
-  height: auto;
+  width: auto;
+  height: 300px;
   margin: 0 auto 32px;
 }
 
