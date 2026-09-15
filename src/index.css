@@ -98,6 +98,11 @@ body {
   margin: 0;
 }
 
+::selection {
+  color: #000;
+  background: #aa3bff;
+}
+
 #root {
   min-height: 100svh;
   display: flex;
