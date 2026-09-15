@@ -32,7 +32,7 @@ export function BitmojiFigure() {
   return (
     <img
       className="hero-figure"
-      src="/imgs/bitmoji-cutout.webp"
+      src="/imgs/character-rm.png"
       alt="Omar's Bitmoji giving two thumbs up"
     />
   )
