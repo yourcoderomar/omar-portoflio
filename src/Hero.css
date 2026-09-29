@@ -1,4 +1,5 @@
 .hero {
+  position: relative;
   background: var(--section-bg);
   padding: 56px 24px 64px;
 }
@@ -18,11 +19,46 @@
   margin: 0 0 24px;
 }
 
+/* positions below are % of character-rm.png (500x500) */
+.hero-figure-wrap {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 32px;
+}
+
 .hero-figure {
   display: block;
   width: auto;
   height: 300px;
-  margin: 0 auto 32px;
+}
+
+.hero-steam {
+  position: absolute;
+  left: 78.5%;
+  top: 50%;
+  width: 1.6%;
+  height: 8%;
+  border-radius: 50%;
+  background: var(--ink-muted);
+  filter: blur(3px);
+  opacity: 0;
+  animation: hero-steam 2.6s ease-out infinite;
+}
+
+.hero-steam + .hero-steam {
+  left: 80%;
+  animation-delay: 1.3s;
+}
+
+@keyframes hero-steam {
+  30% { opacity: 0.35; }
+  100% { opacity: 0; transform: translate(40%, -70%) scaleX(1.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-steam {
+    display: none;
+  }
 }
 
 .hero-headline {
@@ -125,4 +161,68 @@
     font-size: 26px;
     margin-bottom: 32px;
   }
+}
+
+/* mirrors the theme toggle in the top-right corner */
+.hero-time {
+  position: absolute;
+  top: 32px;
+  left: 24px;
+  margin: 0;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+.hero-time time {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .hero-time {
+    top: 22px;
+    left: 16px;
+  }
+}
+
+/* availability dot beside the name */
+.hero-status {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  vertical-align: 2px;
+  border-radius: 50%;
+  background: #3dbb6b;
+}
+
+.hero-status::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: hero-status-ping 2s ease-out infinite;
+}
+
+@keyframes hero-status-ping {
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-status::after {
+    animation: none;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

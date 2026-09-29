@@ -1,4 +1,23 @@
+import { useEffect, useState } from 'react'
 import './Hero.css'
+
+const cairoTime = () =>
+  new Intl.DateTimeFormat('en-US', { timeZone: 'Africa/Cairo', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date())
+
+function LocalTime() {
+  const [time, setTime] = useState(cairoTime)
+
+  useEffect(() => {
+    const id = setInterval(() => setTime(cairoTime()), 10000)
+    return () => clearInterval(id)
+  }, [])
+
+  return (
+    <p className="hero-time">
+      Egypt, Cairo · <time>{time}</time>
+    </p>
+  )
+}
 
 const experience = [
   {
@@ -30,19 +49,29 @@ const experience = [
 
 export function BitmojiFigure() {
   return (
-    <img
-      className="hero-figure"
-      src="/imgs/character-rm.png"
-      alt="Omar's Bitmoji giving two thumbs up"
-    />
+    <div className="hero-figure-wrap">
+      <img
+        className="hero-figure"
+        src="/imgs/character-rm.png"
+        alt="Omar's Bitmoji waving, holding a coffee"
+      />
+      <span className="hero-steam" aria-hidden="true" />
+      <span className="hero-steam" aria-hidden="true" />
+    </div>
   )
 }
 
 function Hero() {
   return (
     <section className="hero">
+      <LocalTime />
       <div className="hero-inner">
-        <p className="hero-name">Omar Mostafa</p>
+        <p className="hero-name">
+          <span className="hero-status" title="Available for work">
+            <span className="visually-hidden">Available for work</span>
+          </span>
+          Omar Mostafa
+        </p>
 
         <BitmojiFigure />
 
