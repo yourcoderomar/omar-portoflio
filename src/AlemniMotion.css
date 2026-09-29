@@ -1,0 +1,388 @@
+/* Alemni motion thumbnail — one 12s loop, every keyframe % sits on that shared timeline.
+   0-10 grid + headline · 8-26 sessions drop in · 30 Physics focus · 34-56 attendance · 60 parents messaged · 90+ out */
+
+.al {
+  --navy: #0a101c;
+  --panel: #111a2a;
+  --panel-2: #172236;
+  --text: #e4e8ef;
+  --muted: #7f899b;
+  --line: rgba(228, 232, 239, 0.08);
+  --accent: #3dbb8c;
+  --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  background: radial-gradient(120% 90% at 85% 10%, #111b2e 0%, var(--navy) 60%);
+  color: var(--text);
+}
+
+/* left copy */
+.al-copy {
+  position: absolute;
+  left: 5cqw;
+  top: 4.6cqw;
+  bottom: 4.6cqw;
+  width: 29cqw;
+  display: flex;
+  flex-direction: column;
+}
+
+.al-mark {
+  font-weight: 600;
+  font-size: 1.9cqw;
+  letter-spacing: -0.04em;
+  animation-name: motion-out;
+}
+
+.al-mark::after {
+  content: '';
+  display: inline-block;
+  width: 0.55cqw;
+  height: 0.55cqw;
+  margin-left: 0.3cqw;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.al-head {
+  margin: auto 0 0;
+  font-weight: 600;
+  font-size: 3cqw;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.al-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+}
+
+.al-line + .al-line {
+  color: var(--muted);
+}
+
+.al-line > span {
+  display: block;
+  transform: translateY(105%);
+  animation-name: al-rise;
+}
+
+@keyframes al-rise {
+  0%, 4% { transform: translateY(105%); }
+  14%, 89% { transform: translateY(0); }
+  95%, 100% { transform: translateY(-105%); }
+}
+
+.al-meta {
+  margin: 1.6cqw 0 0;
+  font: 400 1cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  animation-name: motion-out;
+}
+
+/* calendar, bleeding off the right and bottom edges */
+.al-cal {
+  position: absolute;
+  left: 39cqw;
+  top: 4.6cqw;
+  right: -5cqw;
+  bottom: -3cqw;
+  padding: 1.8cqw 2cqw;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1.4cqw;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  animation-name: al-cal;
+}
+
+@keyframes al-cal {
+  0% { opacity: 0; transform: translateX(3cqw); }
+  8%, 90% { opacity: 1; transform: none; }
+  96%, 100% { opacity: 0; transform: none; }
+}
+
+.al-cal-top {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1.2cqw;
+  font-size: 1.1cqw;
+  color: var(--muted);
+}
+
+.al-cal-top span:first-child {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.al-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 4.4cqw repeat(6, 1fr);
+  grid-template-rows: 2.4cqw repeat(6, 1fr);
+  column-gap: 0.6cqw;
+}
+
+.al-day {
+  grid-row: 1;
+  font: 500 0.95cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* hour label + full-width rule */
+.al-hour {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--line);
+  padding-top: 0.4cqw;
+  font: 400 0.85cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation-name: al-rule;
+}
+
+@keyframes al-rule {
+  0%, 2% { transform: scaleX(0); }
+  10%, 100% { transform: scaleX(1); }
+}
+
+.al-block {
+  margin: 0.35cqw 0;
+  padding: 0.6cqw 0.7cqw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  background: rgba(61, 187, 140, 0.1);
+  border-left: 0.25cqw solid rgba(61, 187, 140, 0.55);
+  border-radius: 0.4cqw;
+  opacity: 0;
+  transform: translateY(-1.5cqw) scale(0.94);
+  animation-name: al-drop;
+  animation-timing-function: var(--spring);
+}
+
+.al-block b {
+  font-size: 1.05cqw;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.al-block span {
+  font: 400 0.85cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+}
+
+@keyframes al-drop {
+  0%, 8% { opacity: 0; transform: translateY(-1.5cqw) scale(0.94); }
+  13%, 90% { opacity: 1; transform: none; }
+  96%, 100% { opacity: 0; transform: none; }
+}
+
+/* the Physics session lights up as the class starts */
+.al-block--focus {
+  animation-name: al-drop, al-focus;
+}
+
+@keyframes al-focus {
+  0%, 28% { background: rgba(61, 187, 140, 0.1); box-shadow: none; }
+  32%, 88% { background: rgba(61, 187, 140, 0.22); box-shadow: inset 0 0 0 1px rgba(61, 187, 140, 0.6); }
+  94%, 100% { background: rgba(61, 187, 140, 0.1); box-shadow: none; }
+}
+
+/* attendance sheet, overlapping the calendar's left edge */
+.al-sheet {
+  position: absolute;
+  left: 35cqw;
+  bottom: 4.6cqw;
+  width: 23cqw;
+  padding: 1.4cqw 1.5cqw 0.8cqw;
+  background: var(--panel-2);
+  border: 1px solid rgba(228, 232, 239, 0.1);
+  border-radius: 1.2cqw;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 2.4cqw 4cqw -1.6cqw rgba(3, 7, 15, 0.8);
+  opacity: 0;
+  transform: translateY(4cqw);
+  animation-name: al-sheet;
+}
+
+@keyframes al-sheet {
+  0%, 32% { opacity: 0; transform: translateY(4cqw); }
+  38%, 90% { opacity: 1; transform: none; }
+  96%, 100% { opacity: 0; transform: none; }
+}
+
+.al-sheet-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.9cqw;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.2cqw;
+}
+
+.al-sheet-top span {
+  font: 400 0.9cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+}
+
+.al-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.9cqw;
+  padding: 0.7cqw 0;
+  font-size: 1.05cqw;
+}
+
+.al-row + .al-row {
+  border-top: 1px solid var(--line);
+}
+
+.al-avatar {
+  display: grid;
+  place-items: center;
+  width: 2.2cqw;
+  height: 2.2cqw;
+  border-radius: 50%;
+  background: #243048;
+  color: #b7c0d0;
+  font: 500 0.75cqw/1 'Geist Mono', monospace;
+}
+
+.al-row:nth-child(3) .al-avatar { background: #2e2a3a; }
+.al-row:nth-child(4) .al-avatar { background: #22352f; }
+.al-row:nth-child(5) .al-avatar { background: #3a2f26; }
+
+.al-check {
+  display: grid;
+  place-items: center;
+  width: 1.7cqw;
+  height: 1.7cqw;
+  border-radius: 50%;
+  border: 1px solid rgba(228, 232, 239, 0.2);
+  animation-name: al-check;
+  animation-timing-function: var(--spring);
+}
+
+.al-check svg {
+  width: 70%;
+  height: 70%;
+}
+
+.al-check path {
+  fill: none;
+  stroke: var(--navy);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  animation: inherit;
+  animation-name: al-tick;
+  animation-timing-function: var(--ease);
+}
+
+@keyframes al-check {
+  0%, 40% { background: transparent; border-color: rgba(228, 232, 239, 0.2); transform: scale(1); }
+  42% { transform: scale(1.18); }
+  44%, 100% { background: var(--accent); border-color: var(--accent); transform: scale(1); }
+}
+
+@keyframes al-tick {
+  0%, 41% { stroke-dashoffset: 10; }
+  45%, 100% { stroke-dashoffset: 0; }
+}
+
+/* parents get the update */
+.al-toast {
+  position: absolute;
+  right: 3.4cqw;
+  top: 12cqw;
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 1cqw 1.6cqw 1cqw 1.2cqw;
+  background: #e9ede8;
+  color: #0f1a16;
+  border-radius: 1cqw;
+  box-shadow: 0 2cqw 3.6cqw -1.4cqw rgba(3, 7, 15, 0.85);
+  opacity: 0;
+  transform: translateY(-2cqw) scale(0.96);
+  animation-name: al-toast;
+  animation-timing-function: var(--spring);
+}
+
+@keyframes al-toast {
+  0%, 60% { opacity: 0; transform: translateY(-2cqw) scale(0.96); }
+  65%, 88% { opacity: 1; transform: none; }
+  93%, 100% { opacity: 0; transform: translateY(-1cqw); }
+}
+
+.al-toast i {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+}
+
+.al-toast div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4cqw;
+}
+
+.al-toast b {
+  font-size: 1.2cqw;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.al-toast span {
+  font: 400 0.9cqw/1 'Geist Mono', monospace;
+  color: #4f5b56;
+}
+
+/* narrow cards (phones): drop the fine print, keep labels legible */
+@container (max-width: 560px) {
+  .al-meta,
+  .al-cal-top,
+  .al-day,
+  .al-hour,
+  .al-block span,
+  .al-toast span {
+    font-size: 0;
+  }
+
+  .al-row:nth-child(n + 4) {
+    display: none;
+  }
+
+  .al-head {
+    font-size: 3.8cqw;
+  }
+
+  .al-block b,
+  .al-name,
+  .al-sheet-top,
+  .al-toast b,
+  .al-mark {
+    font-size: 9px;
+  }
+
+  .al-sheet {
+    left: auto;
+    right: 4cqw;
+    width: 36cqw;
+  }
+}

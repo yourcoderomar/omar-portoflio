@@ -1,0 +1,326 @@
+/* R&M motion thumbnail — one 12s loop, every keyframe % sits on that shared timeline.
+   0-14 drawing + headline · 14-22 BMU rigs · 22-70 cradle drops, glass clears · 90+ out */
+
+@property --rm-d {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: true;
+}
+
+.rm {
+  --sky-top: #202b3b;
+  --sky-bottom: #4c5c72;
+  --text: #edf1f5;
+  --muted: #9aa7b7;
+  --stroke: rgba(226, 232, 240, 0.6);
+  --faint: rgba(226, 232, 240, 0.12);
+  --accent: #cf4b3e;
+
+  display: grid;
+  grid-template-columns: 54fr 46fr;
+  grid-template-rows: 100%;
+  background: linear-gradient(180deg, var(--sky-top) 0%, #2f3d51 55%, var(--sky-bottom) 100%);
+  color: var(--text);
+}
+
+/* elevation drawing */
+.rm-stage {
+  position: relative;
+  min-width: 0;
+  padding: 4cqw 0 0 3cqw;
+}
+
+.rm-stage svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rm-stroke {
+  fill: none;
+  stroke: var(--stroke);
+  stroke-width: 1.2;
+  stroke-dasharray: 1 2;
+  stroke-dashoffset: 1;
+  animation-name: rm-draw;
+  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.rm-stroke--late {
+  animation-name: rm-draw-late;
+}
+
+@keyframes rm-draw {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  12%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes rm-draw-late {
+  0%, 8% { stroke-dashoffset: 1; opacity: 1; }
+  14%, 90% { stroke-dashoffset: 0; opacity: 1; }
+  96%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.rm-windows rect {
+  fill: #33445b;
+  stroke: var(--faint);
+  stroke-width: 0.6;
+}
+
+.rm-windows {
+  opacity: 0;
+  animation-name: rm-fade;
+}
+
+@keyframes rm-fade {
+  0%, 8% { opacity: 0; }
+  14%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+#rm-hatch line {
+  stroke: rgba(226, 232, 240, 0.28);
+  stroke-width: 1;
+}
+
+.rm-dirty {
+  fill: url(#rm-hatch);
+  opacity: 0;
+  animation-name: rm-fade;
+}
+
+/* drop 2's haze shrinks toward the ground in lockstep with the cradle */
+.rm-haze {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation-name: rm-fade, rm-clear;
+  animation-timing-function: var(--ease), linear;
+}
+
+@keyframes rm-clear {
+  0%, 22% { transform: scaleY(1); }
+  70%, 100% { transform: scaleY(0.03); }
+}
+
+.rm-dim path {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 0.8;
+}
+
+.rm-dim text {
+  fill: var(--muted);
+  font: 500 7px 'Geist Mono', monospace;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+}
+
+.rm-dim {
+  opacity: 0;
+  animation-name: rm-fade;
+}
+
+/* roof machine rigs up */
+.rm-bmu rect {
+  fill: #dfe5ec;
+}
+
+.rm-bmu {
+  transform-box: view-box;
+  transform-origin: 172px 60px;
+  transform: scaleY(0);
+  animation-name: rm-rise;
+}
+
+@keyframes rm-rise {
+  0%, 12% { transform: scaleY(0); opacity: 1; }
+  18%, 90% { transform: scaleY(1); opacity: 1; }
+  96%, 100% { transform: scaleY(1); opacity: 0; }
+}
+
+.rm-jib {
+  transform-box: fill-box;
+  transform-origin: right;
+  animation-name: rm-jib;
+}
+
+@keyframes rm-jib {
+  0%, 15% { transform: scaleX(0); }
+  21%, 100% { transform: scaleX(1); }
+}
+
+/* cradle and cables share the same linear 22-70% drop (216 units) */
+.rm-cables line {
+  stroke: var(--stroke);
+  stroke-width: 0.7;
+}
+
+.rm-cables {
+  transform-box: view-box;
+  transform-origin: 0 20px;
+  animation-name: rm-cables;
+  animation-timing-function: linear;
+}
+
+@keyframes rm-cables {
+  0%, 18% { transform: scaleY(1); opacity: 0; }
+  21% { transform: scaleY(1); opacity: 1; }
+  22% { transform: scaleY(1); }
+  70%, 90% { transform: scaleY(5.909); opacity: 1; }
+  96%, 100% { transform: scaleY(5.909); opacity: 0; }
+}
+
+.rm-cradle rect {
+  fill: var(--accent);
+}
+
+.rm-cradle path {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 0.9;
+}
+
+.rm-cradle {
+  opacity: 0;
+  animation-name: rm-cradle;
+  animation-timing-function: linear;
+}
+
+@keyframes rm-cradle {
+  0%, 18% { transform: translateY(0); opacity: 0; }
+  21% { transform: translateY(0); opacity: 1; }
+  22% { transform: translateY(0); }
+  70%, 90% { transform: translateY(216px); opacity: 1; }
+  96%, 100% { transform: translateY(216px); opacity: 0; }
+}
+
+/* copy column */
+.rm-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 4.2cqw 4.6cqw 4cqw 2cqw;
+}
+
+.rm-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 1.4cqw;
+  border-bottom: 1px solid var(--faint);
+  animation-name: motion-out;
+}
+
+.rm-mark {
+  font-weight: 600;
+  font-size: 1.8cqw;
+  letter-spacing: -0.03em;
+}
+
+.rm-tag {
+  font: 500 1cqw/1 'Geist Mono', monospace;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rm-head {
+  margin: 0;
+  font-weight: 500;
+  font-size: 3.8cqw;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.rm-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+}
+
+.rm-line:nth-child(n + 2) {
+  color: var(--muted);
+}
+
+.rm-line > span {
+  display: block;
+  transform: translateY(105%);
+  animation-name: rm-rise-text;
+}
+
+@keyframes rm-rise-text {
+  0%, 6% { transform: translateY(105%); }
+  16%, 89% { transform: translateY(0); }
+  95%, 100% { transform: translateY(-105%); }
+}
+
+.rm-sub {
+  margin: 1.6cqw 0 0;
+  max-width: 30ch;
+  font-size: 1.3cqw;
+  line-height: 1.45;
+  color: var(--muted);
+  opacity: 0;
+  animation-name: rm-fade;
+}
+
+.rm-readout {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+  padding-top: 1.4cqw;
+  border-top: 1px solid var(--faint);
+  animation-name: motion-out;
+}
+
+.rm-readout em {
+  display: block;
+  margin-bottom: 0.6cqw;
+  font: 500 0.9cqw/1 'Geist Mono', monospace;
+  font-style: normal;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rm-readout b {
+  font: 500 1.6cqw/1 'Geist Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+.rm-depth {
+  color: var(--accent);
+  animation-name: rm-depth;
+  animation-timing-function: linear;
+}
+
+.rm-depth::after {
+  counter-reset: d var(--rm-d);
+  content: counter(d) ' m';
+}
+
+@keyframes rm-depth {
+  0%, 22% { --rm-d: 0; }
+  70%, 100% { --rm-d: 142; }
+}
+
+/* narrow cards (phones): drop the fine print, keep labels legible */
+@container (max-width: 560px) {
+  .rm-sub,
+  .rm-tag,
+  .rm-readout div:last-child {
+    display: none;
+  }
+
+  .rm-head {
+    font-size: 4.4cqw;
+  }
+
+  .rm-mark,
+  .rm-readout em,
+  .rm-readout b {
+    font-size: 9px;
+  }
+}

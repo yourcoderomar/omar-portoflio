@@ -14,10 +14,98 @@
   transform: translateY(-100%);
 }
 
+/* all positions below are % of loader.webp (1254x1254) */
+.loader-figure {
+  position: relative;
+  display: flex;
+  transform-origin: 50% 100%;
+  animation: loader-breathe 3.2s ease-in-out infinite;
+}
+
 .loader-img {
   max-width: 30vw;
   max-height: 40vh;
   object-fit: contain;
+}
+
+@keyframes loader-breathe {
+  50% { transform: scale(1.006); }
+}
+
+/* hard edge along the laptop lid (right), soft fade into the sleeve elsewhere */
+.loader-hand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  clip-path: polygon(39.5% 41.6%, 47.2% 41.6%, 46.2% 47.7%, 39.5% 47.7%);
+  mask-image: radial-gradient(ellipse 5% 3.6% at 43.5% 44.5%, #000 55%, transparent 100%);
+  transform-origin: 40.3% 44.7%;
+  animation: loader-type 0.9s linear infinite;
+}
+
+/* irregular taps: fingers dip, pause, double-tap */
+@keyframes loader-type {
+  0%, 14%, 30%, 40%, 58%, 100% { transform: none; }
+  7% { transform: translateY(0.12%) rotate(0.8deg); }
+  35% { transform: translateY(0.1%) rotate(0.6deg); }
+  49% { transform: translateY(0.14%) rotate(1deg); }
+}
+
+/* faint screen light on face and chest */
+.loader-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 13% 15% at 51% 33%, rgba(210, 225, 255, 0.55), transparent);
+  mix-blend-mode: screen;
+  /* only light the character, not the transparent background */
+  mask: url('/imgs/loader.webp') center / contain no-repeat;
+  opacity: 0.08;
+  animation: loader-flicker 1.3s steps(1) infinite;
+}
+
+@keyframes loader-flicker {
+  0% { opacity: 0.08; }
+  23% { opacity: 0.13; }
+  41% { opacity: 0.06; }
+  67% { opacity: 0.11; }
+  84% { opacity: 0.07; }
+}
+
+.loader-steam {
+  position: absolute;
+  left: 74.6%;
+  top: 29%;
+  width: 1.2%;
+  height: 7%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  filter: blur(3px);
+  opacity: 0;
+  animation: loader-steam 2.4s ease-out infinite;
+}
+
+.loader-steam + .loader-steam {
+  left: 75.6%;
+  animation-delay: 1.2s;
+}
+
+@keyframes loader-steam {
+  0% { opacity: 0; transform: translateY(0) scaleX(1); }
+  30% { opacity: 0.45; }
+  100% { opacity: 0; transform: translateY(-60%) translateX(40%) scaleX(1.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-figure,
+  .loader-figure * {
+    animation: none;
+  }
+
+  .loader-steam {
+    display: none;
+  }
 }
 
 .loader-count {

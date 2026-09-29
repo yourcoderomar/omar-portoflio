@@ -26,7 +26,14 @@ function Loader({ onDone }) {
 
   return (
     <div className={`loader${leaving ? ' loader-leaving' : ''}`}>
-      <img className="loader-img" src="/imgs/loader.png" alt="" />
+      <div className="loader-figure">
+        <img className="loader-img" src="/imgs/loader.webp" alt="" />
+        {/* the visible hand, cut from the same image and nudged to fake typing */}
+        <img className="loader-hand" src="/imgs/loader.webp" alt="" aria-hidden="true" />
+        <span className="loader-glow" aria-hidden="true" />
+        <span className="loader-steam" aria-hidden="true" />
+        <span className="loader-steam" aria-hidden="true" />
+      </div>
       <span className="loader-count">{count}</span>
     </div>
   )

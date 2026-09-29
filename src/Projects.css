@@ -36,12 +36,6 @@
   overflow: hidden;
 }
 
-.project-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
 
 .project-card-name {
   font-family: 'Comfortaa', sans-serif;
@@ -58,4 +52,44 @@
   line-height: 1.5;
   color: var(--ink-muted);
   margin: 0;
+}
+
+.project-card-thumb:not([data-inview]) *,
+.project-card-thumb:not([data-inview]) *::before,
+.project-card-thumb:not([data-inview]) *::after {
+  animation-play-state: paused !important;
+}
+
+/* shared base for the motion thumbnails (Back2Home, Alemni, R&M): one 12s loop */
+.motion-card {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  font-family: 'Geist', sans-serif;
+}
+
+.motion-card *,
+.motion-card *::before {
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--ease);
+}
+
+/* shared out-phase so everything leaves together */
+@keyframes motion-out {
+  0%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+/* reduced motion: each card holds its finished frame */
+@media (prefers-reduced-motion: reduce) {
+  .motion-card *,
+  .motion-card *::before {
+    animation-delay: -9s !important;
+    animation-play-state: paused !important;
+  }
 }
