@@ -1,0 +1,263 @@
+/* Infinity Travel motion thumbnail — 12s loop (timing + fade-out shared via .motion-card).
+   0-14 headline · 10-22 sea print lands · 22-34 desert print lands · 42 sticker · 88+ prints leave.
+   The destination band scrolls on its own continuous loop. */
+
+.iv {
+  --blue: #4949ea;
+  --blue-deep: #3434c9;
+  --text: #f5f5ff;
+  --muted: rgba(245, 245, 255, 0.66);
+  --lime: #ddf444;
+  --dark: #17173d;
+  --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  background: radial-gradient(120% 100% at 85% 15%, #5a5af2 0%, var(--blue) 50%, var(--blue-deep) 100%);
+  color: var(--text);
+}
+
+/* copy, left */
+.iv-copy {
+  position: absolute;
+  left: 5cqw;
+  top: 4.6cqw;
+  width: 40cqw;
+}
+
+.iv-logo {
+  display: block;
+  width: 13cqw;
+  margin: -0.8cqw 0 2.6cqw -0.6cqw;
+  transform-origin: 30% 70%;
+  animation-name: iv-logo;
+  animation-timing-function: var(--spring);
+}
+
+/* always visible; a small wobble when the desert print lands */
+@keyframes iv-logo {
+  0%, 22%, 28%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-4deg); }
+}
+
+.iv-head {
+  margin: 0;
+  font-weight: 600;
+  font-size: 4.8cqw;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.iv-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.iv-line:last-child {
+  color: var(--lime);
+}
+
+.iv-line > span {
+  display: block;
+  transform: translateY(105%);
+  animation-name: iv-rise;
+}
+
+@keyframes iv-rise {
+  0%, 3% { transform: translateY(105%); }
+  12%, 89% { transform: translateY(0); }
+  95%, 100% { transform: translateY(-105%); }
+}
+
+.iv-sub {
+  margin: 1.8cqw 0 0;
+  font: 500 1.1cqw/1 'Geist Mono', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  animation-name: iv-fade;
+}
+
+@keyframes iv-fade {
+  0%, 10% { opacity: 0; }
+  16%, 90% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+
+/* photo prints */
+.iv-print {
+  position: absolute;
+  margin: 0;
+  padding: 0.9cqw 0.9cqw 0;
+  background: #fbfbf7;
+  box-shadow: 0 2.4cqw 4.4cqw -1.8cqw rgba(16, 16, 80, 0.6);
+  opacity: 0;
+}
+
+.iv-print figcaption {
+  padding: 1cqw 0.2cqw 1.1cqw;
+  font: 500 0.95cqw/1 'Geist Mono', monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #55556f;
+}
+
+.iv-photo {
+  overflow: hidden;
+  background: #d9d9e8;
+}
+
+.iv-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation-name: iv-zoom;
+  animation-timing-function: linear;
+}
+
+@keyframes iv-zoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+.iv-print--sea {
+  right: 4cqw;
+  top: 5cqw;
+  width: 34cqw;
+  --tilt: 4deg;
+  animation-name: iv-land;
+  animation-timing-function: var(--spring);
+}
+
+.iv-print--sea .iv-photo {
+  aspect-ratio: 16 / 10;
+}
+
+.iv-print--sea img {
+  object-position: 50% 40%;
+}
+
+.iv-print--desert {
+  right: 28cqw;
+  top: 14cqw;
+  width: 24cqw;
+  --tilt: -6deg;
+  animation-name: iv-land-late;
+  animation-timing-function: var(--spring);
+}
+
+.iv-print--desert .iv-photo {
+  aspect-ratio: 1;
+}
+
+/* crop toward the group and the flag, not the empty sky */
+.iv-print--desert img {
+  object-position: 50% 74%;
+}
+
+@keyframes iv-land {
+  0%, 10% { opacity: 0; transform: translate(6cqw, -8cqw) rotate(calc(var(--tilt) + 10deg)) scale(1.08); }
+  12% { opacity: 1; }
+  20%, 88% { opacity: 1; transform: rotate(var(--tilt)); }
+  95%, 100% { opacity: 0; transform: translate(4cqw, 3cqw) rotate(var(--tilt)); }
+}
+
+@keyframes iv-land-late {
+  0%, 22% { opacity: 0; transform: translate(-6cqw, -8cqw) rotate(calc(var(--tilt) - 10deg)) scale(1.08); }
+  24% { opacity: 1; }
+  32%, 88% { opacity: 1; transform: rotate(var(--tilt)); }
+  95%, 100% { opacity: 0; transform: translate(-4cqw, 3cqw) rotate(var(--tilt)); }
+}
+
+.iv-sticker {
+  position: absolute;
+  right: -4cqw;
+  bottom: 5.5cqw;
+  padding: 0.8cqw 1.3cqw;
+  border-radius: 99px;
+  background: var(--lime);
+  color: var(--dark);
+  font: 600 1.05cqw/1 'Geist', sans-serif;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 1cqw 2cqw -0.8cqw rgba(16, 16, 80, 0.6);
+  opacity: 0;
+  transform: rotate(8deg) scale(0.4);
+  animation-name: iv-sticker;
+  animation-timing-function: var(--spring);
+}
+
+@keyframes iv-sticker {
+  0%, 40% { opacity: 0; transform: rotate(8deg) scale(0.4); }
+  44%, 100% { opacity: 1; transform: rotate(8deg) scale(1); }
+}
+
+/* destination band, slightly tilted, always moving */
+.iv-band {
+  position: absolute;
+  left: -4cqw;
+  right: -4cqw;
+  bottom: 3.4cqw;
+  padding: 1.1cqw 0;
+  background: var(--lime);
+  color: var(--dark);
+  transform: rotate(-2deg);
+  overflow: hidden;
+}
+
+.iv-track {
+  display: flex;
+  width: max-content;
+  animation: iv-marquee 16s linear infinite !important;
+}
+
+.iv-track span {
+  padding: 0 2.2cqw;
+  font-weight: 600;
+  font-size: 2cqw;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.iv-track span::after {
+  content: '';
+  display: inline-block;
+  width: 0.9cqw;
+  height: 0.9cqw;
+  margin-left: 4.4cqw;
+  border-radius: 50%;
+  background: var(--blue);
+  vertical-align: 0.3cqw;
+}
+
+@keyframes iv-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* narrow cards (phones): drop the fine print, keep labels legible */
+@container (max-width: 560px) {
+  .iv-sub,
+  .iv-print figcaption {
+    display: none;
+  }
+
+  .iv-print {
+    padding-bottom: 0.9cqw;
+  }
+
+  .iv-sticker {
+    font-size: 9px;
+  }
+
+  .iv-head {
+    font-size: 5.6cqw;
+  }
+
+  .iv-track span {
+    font-size: 11px;
+  }
+}

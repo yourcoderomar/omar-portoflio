@@ -25,7 +25,7 @@ const experience = [
     logo: '/imgs/bdc-logo.webp',
     invertLogo: true,
     role: 'Full Stack Developer',
-    years: 'Mar 2026-Present',
+    years: 'Mar 2026-Oct 2026',
     description:
       'Built and deployed full-stack web apps end to end, from frontend and backend to APIs and databases. Also built web-scraping pipelines and automation workflows that turned raw data into interactive dashboards and business-focused software.',
   },

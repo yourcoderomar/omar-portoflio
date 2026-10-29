@@ -9,6 +9,7 @@ const skills = [
   'Database management',
   'Performance optimization',
   'Automation',
+  'AI engineering',
 ]
 
 function About() {
@@ -17,11 +18,10 @@ function About() {
       <div className="about-inner">
         <h2 className="about-title">About</h2>
         <p className="about-desc">
-          I'm a full stack developer with experience building web applications
-          focused on performance, scalability, and usability. I specialize in
-          creating responsive frontend interfaces, developing reliable backend
-          systems, and working across the full product development process
-          using modern technologies and clean development practices.
+          I'm a Full-Stack and AI Engineer building React/Next.js and
+          TypeScript applications with Supabase/PostgreSQL backends,
+          authentication, and AI-powered automation workflows. I have a
+          background in business information systems and data analytics.
         </p>
 
         <p className="about-skills-label">Key skills:</p>

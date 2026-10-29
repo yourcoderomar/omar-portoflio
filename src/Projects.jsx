@@ -3,8 +3,15 @@ import './Projects.css'
 import Back2HomeMotion from './Back2HomeMotion'
 import AlemniMotion from './AlemniMotion'
 import RmBmuMotion from './RmBmuMotion'
+import InfinityMotion from './InfinityMotion'
 
 const projects = [
+  {
+    name: 'Infinity Travel',
+    description: 'Infinity Vibes runs group trips out of Cairo to Dahab, Fayoum and Ain El Sokhna. Travellers pick a place and a date, then book their seats by request.',
+    Motion: InfinityMotion,
+    url: 'https://infinity-nine-sandy.vercel.app',
+  },
   {
     name: 'RM bmu ',
     description: 'A provider of certified European BMU systems, elevators, and facade maintenance solutions in Egypt.',
